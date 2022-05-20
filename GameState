@@ -1,0 +1,31 @@
+gs  = { 
+
+    "left" : {
+        "left_y": -40, 
+        "left_key":"", 
+        "origin_ly": 300,
+        "rotation_l": 0, 
+        "ro_left": 0},
+    
+    "right" : {              
+        "right_y": -40, 
+        "right_key": "", 
+        "origin_ry": 300, 
+        "rotation_r": 0, 
+        "ro_right": 0},
+    
+    "score" : {
+        "triangle_score": 0, 
+        "right_score": 0, 
+        "left_score": 0,
+        "mode": "gameon"},
+    
+    "ball" : {
+        "ball_x": 100,
+        "ball_y": 20, 
+        "ball_dx": 3, 
+        "ball_dy": 0, 
+        "ball_rx": 400, 
+        "ball_ry": 300, 
+        "ball_rdx": 2, 
+        "ball_rdy": 1}}
