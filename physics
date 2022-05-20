@@ -1,0 +1,82 @@
+import random
+
+def ball_rectangle_bounce(ball):
+    #red ball bouncing inside little rectangle
+    if ball["ball_ry"] > 365 or ball["ball_ry"] < 225:
+        ball["ball_rdy"] = ball["ball_rdy"] * -1
+    if ball["ball_rx"] > 465 or ball["ball_rx"] < 325: 
+        ball["ball_rdx"] = ball["ball_rdx"] * -1
+        
+def update_ball_position(ball):
+    #updates ball positions
+    ball["ball_x"] = ball["ball_x"] + ball["ball_dx"]
+    ball["ball_y"] = ball["ball_y"] + ball["ball_dy"]
+    ball["ball_rx"] = ball["ball_rx"] + ball["ball_rdx"]
+    ball["ball_ry"] = ball["ball_ry"] + ball["ball_rdy"]
+    
+def ball_collision( ball, score ):
+    #balls colliding powerup/change of direction
+    if (ball["ball_rx"] - 10) < ball["ball_x"] < (ball["ball_rx"] + 20) and (ball["ball_ry"] - 20) < ball["ball_y"] < (ball["ball_ry"] + 30):
+        score["triangle_score"] += 1
+        if ball["ball_dx"] < 0:
+            ball["ball_dx"] = random.randint(3, 4)
+            ball["ball_dy"] = (4 - ball["ball_dx"])
+        elif ball["ball_dx"] > 0:
+            ball["ball_dx"] = random.randint(-4, -3)
+            ball["ball_dy"] = (4 + ball["ball_dx"])
+            
+def triangle_bounce(ball):
+    if ball["ball_x"] < 400 and ball["ball_y"] < 300 :
+            ball["ball_dx"] = -sqrt(8) 
+            ball["ball_dy"] = sqrt(8)
+    elif ball["ball_x"] > 400 and ball["ball_y"] < 300:
+            ball["ball_dx"] = sqrt(8) 
+            ball["ball_dy"] = sqrt(8)
+    elif ball["ball_x"] > 400 and ball["ball_y"] > 300:
+            ball["ball_dx"] = sqrt(8) 
+            ball["ball_dy"] = -sqrt(8)
+    elif ball["ball_x"] < 400 and ball["ball_y"] > 300:
+            ball["ball_dx"] = -sqrt(8) 
+            ball["ball_dy"] = -sqrt(8) 
+        
+
+def check_and_perform_bounce(ball, left, right):
+    if ball["ball_y"] > 585 or ball["ball_y"] < 15:
+        ball["ball_dy"] = ball["ball_dy"] * -1
+    
+    if ball["ball_x"] < 75 and ball["ball_y"] < (left["origin_ly"] + 40) and ball["ball_y"] > (left["origin_ly"] - 40):
+        if left["rotation_l"] == 0:
+            ball["ball_dx"] = ball["ball_dx"] * -1
+        else:
+            ball["ball_dy"] = 4 * sin(left["rotation_l"])
+            ball["ball_dx"] = 4 * cos(left["rotation_l"])
+    
+    if ball["ball_x"] > 730 and ball["ball_y"] < (right["origin_ry"] + 40) and ball["ball_y"] > (right["origin_ry"] - 40):
+        if right["rotation_r"] == 0:
+            ball["ball_dx"] = ball["ball_dx"] * -1
+        else:
+            ball["ball_dy"] = -4 * sin(right["rotation_r"])
+            ball["ball_dx"] = -4 * cos(right["rotation_r"])
+            
+def triangle_check_and_bounce(ball, score):
+    if score["triangle_score"] == 1 and ball["ball_y"] < (ball["ball_x"] - 330) and ball["ball_y"] < (470 - ball["ball_x"]):
+        triangle_bounce(ball)
+    #triangle score 1 bounce lower triangle
+    if score["triangle_score"] == 1 and ball["ball_x"] < (ball["ball_y"] - 130) and ball["ball_y"] > (920 - ball["ball_x"]):
+        triangle_bounce(ball)
+    
+    #triangle score 2 bounce upper triangle
+    if score["triangle_score"] == 2 and ball["ball_y"] < (ball["ball_x"] - 300) and ball["ball_y"] < (500 - ball["ball_x"]):
+        triangle_bounce(ball)
+        
+    #triangle score 2 bounce lower triangle
+    if score["triangle_score"] == 2 and ball["ball_x"] < (ball["ball_y"] - 100) and ball["ball_y"] > (900 - ball["ball_x"]):
+        triangle_bounce(ball)
+        
+    #triangle score 3 bounce upper triangle
+    if score["triangle_score"] == 3 and ball["ball_y"] < (ball["ball_x"] - 275) and ball["ball_y"] < (525 - ball["ball_x"]):
+        triangle_bounce(ball)
+        
+    #triangle score 3 bounce lower triangle
+    if score["triangle_score"] == 3 and ball["ball_x"] < (ball["ball_y"] - 75) and ball["ball_y"] > (875 - ball["ball_x"]):
+        triangle_bounce(ball)
