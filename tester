@@ -1,0 +1,66 @@
+from GameState import *
+from functions import *
+import math as math
+
+
+def setup(): 
+    
+    size(800,600)
+    
+def draw():   
+
+    background(0)
+    
+    screen_draw(gs["ball"], gs["score"], gs["right"], gs["left"])
+   
+    ball_reset(gs["ball"], gs["score"])
+    
+    ball_collision(gs["ball"], gs["score"])    
+
+    update_ball_position(gs["ball"])
+    
+    moving_paddles(gs["left"], gs["right"])
+
+    ball_rectangle_bounce(gs["ball"])
+     
+    check_and_perform_bounce(gs["ball"], gs["left"], gs["right"])
+    
+    triangle_check_and_bounce(gs["ball"], gs["score"])
+    
+def keyReleased():
+
+    if key == "w":
+        gs["left"]["left_key"] = "" 
+    elif key == "s":
+        gs["left"]["left_key"] = ""
+    elif key == "i":
+        gs["right"]["right_key"] = "" 
+    elif key == "k":
+        gs["right"]["right_key"] = "" 
+        
+def keyPressed():
+    #left player w/s
+    if key == "w":
+        gs["left"]["left_key"] = "w" 
+    elif key == "s":
+        gs["left"]["left_key"] = "s"
+    
+    #right player
+    elif key == "i":
+        gs["right"]["right_key"] = "i" 
+    elif key == "k":
+        gs["right"]["right_key"] = "k"  
+
+    #rotation left
+    if key == "r" and gs["left"]["ro_left"] < 6:  
+        gs["left"]["ro_left"] = gs["left"]["ro_left"] + 1
+    if key == "e" and gs["left"]["ro_left"] > -6:
+        gs["left"]["ro_left"] = gs["left"]["ro_left"] - 1
+ 
+    #rotation right      
+    if key == "u" and gs["right"]["ro_right"] < 6:
+        gs["right"]["ro_right"] = gs["right"]["ro_right"] + 1
+    if key == "y" and gs["right"]["ro_right"] > -6:
+        gs["right"]["ro_right"] = gs["right"]["ro_right"] - 1
+    
+    
