@@ -1,6 +1,7 @@
 from GameState import *
-from functions import *
 import math as math
+from functions import *
+from physics import * 
 
 
 def setup(): 
